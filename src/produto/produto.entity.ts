@@ -1,8 +1,9 @@
 import { MARCA } from "src/marca/marca.entity";
-import { PrimaryColumn,Column, ManyToOne, Entity, JoinColumn } from "typeorm";
+import { PESSOA } from "src/pessoa/pessoa.entity";
+import { PrimaryColumn, Column, ManyToOne, Entity, JoinColumn } from "typeorm";
 
 @Entity()
-export class PRODUTO{
+export class PRODUTO {
     @PrimaryColumn()
     ID: string;
 
@@ -13,7 +14,11 @@ export class PRODUTO{
     PRECO: number;
 
     @ManyToOne(() => MARCA, marca => marca.produtos)
-    @JoinColumn({ name: 'IDMARCA', referencedColumnName:'ID'})
+    @JoinColumn({ name: 'IDMARCA', referencedColumnName: 'ID' })
     marca: MARCA;
+
+    @ManyToOne(() => PESSOA, pessoa => pessoa.produtos)
+    @JoinColumn({ name: 'IDPESSOA', referencedColumnName: 'ID' })
+    pessoa: PESSOA;
 
 }
