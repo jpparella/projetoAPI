@@ -8,13 +8,13 @@ import { marcaProviders } from "src/marca/marca.providers";
 
 
 @Module({
-    imports: [DatabaseModule],
-    controllers: [ProdutoController],
-    providers: [
-      ...produtoProviders,
-      ProdutoService,   
-      ...marcaProviders,
-        MarcaService,   
-    ],
-  })
-  export class ProdutoModule {}
+  imports: [DatabaseModule],
+  controllers: [ProdutoController],
+  providers: [
+    ...produtoProviders,
+    ProdutoService,
+    ...marcaProviders,
+    MarcaService,
+  ],
+})
+export class ProdutoModule { }

@@ -12,4 +12,4 @@ import { MarcaService } from './marca.service';
     MarcaService,
   ],
 })
-export class MarcaModule {}
+export class MarcaModule { }

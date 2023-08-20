@@ -1,16 +1,16 @@
-import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString} from "class-validator";
+import { IsArray, IsBoolean, IsInt, IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
 
 
-export class AlteraProdutoDTO{
+export class AlteraProdutoDTO {
     @IsString()
-    @IsNotEmpty({message: "Nome não pode ser vazio"})
+    @IsNotEmpty({ message: "Nome não pode ser vazio" })
     @IsOptional()
-    NOME: string;    
+    NOME: string;
 
     @IsOptional()
     @IsNumber()
     VALOR: number;
-    
+
     @IsOptional()
     @IsString()
     IDMARCA: string;
