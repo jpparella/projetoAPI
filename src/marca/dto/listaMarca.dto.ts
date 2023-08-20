@@ -1,6 +1,6 @@
-export class listaMarcaDTO{
+export class listaMarcaDTO {
     constructor(
-        readonly ID:string,
+        readonly ID: string,
         readonly NOME: string
-    ){}
+    ) { }
 }

@@ -2,68 +2,68 @@ import { Injectable } from "@nestjs/common";
 import { PRODUTO } from "./produto.entity";
 
 @Injectable()
-export class ProdutosArmazenados{
-    #produtos: PRODUTO[] = [];    
+export class ProdutosArmazenados {
+    #produtos: PRODUTO[] = [];
 
-    AdicionarProduto(produto: PRODUTO){
+    AdicionarProduto(produto: PRODUTO) {
         this.#produtos.push(produto);
     }
 
-    get Produtos(){        
+    get Produtos() {
         return this.#produtos;
     }
 
-    
 
-    private buscaPorID(id: string){
+
+    private buscaPorID(id: string) {
         const possivelProduto = this.#produtos.find(
             prodSalvo => prodSalvo.ID === id
         );
 
-        if(!possivelProduto){
+        if (!possivelProduto) {
             throw new Error('Produto não encontrado');
         }
 
         return possivelProduto
     }
 
-    async ProdutosByID(id: string){
+    async ProdutosByID(id: string) {
         const produto = this.buscaPorID(id);
         return produto;
     }
 
-    async ProdutosByNome(nome: string){
+    async ProdutosByNome(nome: string) {
         const produto = this.#produtos.filter(
             prodSalvo => prodSalvo.NOME.includes(nome)
         );
 
-        if(!produto){
+        if (!produto) {
             throw new Error('Produto não encontrado');
         }
 
         return produto;
     }
 
-    async ProdutosByMarca(marca: string){
+    async ProdutosByMarca(marca: string) {
         //const produto = this.#produtos.filter(
-            //prodSalvo => prodSalvo.MARCA.includes(marca)
+        //prodSalvo => prodSalvo.MARCA.includes(marca)
         //);
 
         //if(!produto){
-          //  throw new Error('Produto não encontrado');
+        //  throw new Error('Produto não encontrado');
         //}
 
         //return produto;
     }
 
-  
 
-    async atualizaProduto(id: string, dadosAtualizacao: Partial<PRODUTO>){
+
+    async atualizaProduto(id: string, dadosAtualizacao: Partial<PRODUTO>) {
         const produto = this.buscaPorID(id);
 
         Object.entries(dadosAtualizacao).forEach(
             ([chave, valor]) => {
-                if(chave=== 'id'){
+                if (chave === 'id') {
                     return;
                 }
 
@@ -74,7 +74,7 @@ export class ProdutosArmazenados{
         return produto;
     }
 
-    async removeProduto(id: string){
+    async removeProduto(id: string) {
         const produto = this.buscaPorID(id);
         this.#produtos = this.#produtos.filter(
             prodSalvo => prodSalvo.ID !== id
@@ -82,5 +82,5 @@ export class ProdutosArmazenados{
         return produto;
     }
 
-    
+
 }

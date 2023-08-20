@@ -1,10 +1,9 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { PESSOA } from "./pessoa.entity";
-import { PessoaService } from "./pessoa.service";
-import { CriaPessoaDTO } from "./dto/criaPessoa.dto";
+
 import { RetornoCadastroDTO, RetornoObjDTO } from "src/dto/retorno.dto";
-import { listaPessoaUsuaDTO } from "./dto/listaPessoaUsuadto";
-import { PesquisaPessoaDTO } from "./dto/pesquisaPessoa.dto";
+import { CriaPessoaDTO } from "./dto/criaPessoa.dto";
+import { Pessoa } from "./pessoa.entity";
+import { PessoaService } from "./pessoa.service";
+import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
 
 
 @Controller('/pessoa')
@@ -14,22 +13,22 @@ export class PessoaController {
     }
 
     @Get('listar')
-    async listar(): Promise<PESSOA[]> {
+    async listar(): Promise<Pessoa[]> {
         return this.pessoaService.listar();
     }
 
     @Post('')
-    async criaPessoa(@Body() dados: CriaPessoaDTO): Promise<RetornoCadastroDTO> {
+    async criaMarca(@Body() dados: CriaPessoaDTO): Promise<RetornoCadastroDTO> {
         return this.pessoaService.inserir(dados)
     }
 
-    @Put('alterar-:id')
-    async alterarPessoa(@Body() dados: CriaPessoaDTO, @Param('id') id: string): Promise<RetornoCadastroDTO> {
+    @Put(':id')
+    async alterarMarca(@Body() dados: CriaPessoaDTO, @Param('id') id: string): Promise<RetornoCadastroDTO> {
         return this.pessoaService.alterar(id, dados)
     }
 
     @Get('ID-:id')
-    async listarID(@Param('id') id: string): Promise<PESSOA> {
+    async listarID(@Param('id') id: string): Promise<Pessoa> {
         return this.pessoaService.localizarID(id);
     }
 
@@ -39,14 +38,14 @@ export class PessoaController {
     }
 
     @Delete('remove-:id')
-    async removePessoa(@Param('id') id: string): Promise<RetornoObjDTO> {
+    async removeMarca(@Param('id') id: string): Promise<RetornoObjDTO> {
         return this.pessoaService.remover(id);
     }
 
-    @Get('ComUsua')
-    async listaPessoaUsua(@Body() dados: PesquisaPessoaDTO): Promise<listaPessoaUsuaDTO[]> {
-        return await this.pessoaService.listaComUsua(dados.NOME);
-    }
+    // @Get('ComForn/')
+    // async listaMarcaForn(@Body() dados: PesquisaMarcaDTO): Promise<listaMarcaFornDTO[]>{
+    //     return await this.pessoaService.listaComForn(dados.NOME);
+    // }
 
 
 }

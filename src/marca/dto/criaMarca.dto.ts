@@ -1,8 +1,8 @@
-import { IsEmail, IsInt, IsNotEmpty, IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsString } from "class-validator";
 
 
-export class CriaMarcaDTO{
+export class CriaMarcaDTO {
     @IsString()
-    @IsNotEmpty({message: "Nome não pode ser vazio"})
+    @IsNotEmpty({ message: "Nome não pode ser vazio" })
     NOME: string;
 }

@@ -1,31 +1,35 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { PESSOA } from './pessoa.entity';
 import { RetornoCadastroDTO, RetornoObjDTO } from 'src/dto/retorno.dto';
 import { v4 as uuid } from 'uuid';
+import { Pessoa } from './pessoa.entity';
 import { CriaPessoaDTO } from './dto/criaPessoa.dto';
-import { listaPessoaUsuaDTO } from './dto/listaPessoaUsuadto';
+
+
+
 
 @Injectable()
 export class PessoaService {
   constructor(
     @Inject('PESSOA_REPOSITORY')
-    private pessoaRepository: Repository<PESSOA>,
+    private pessoaRepository: Repository<Pessoa>,
   ) { }
 
-  async listar(): Promise<PESSOA[]> {
+  async listar(): Promise<Pessoa[]> {
     return this.pessoaRepository.find();
   }
 
   async inserir(dados: CriaPessoaDTO): Promise<RetornoCadastroDTO> {
-    let pessoa = new PESSOA();
-    pessoa.ID = uuid();
-    pessoa.NOME = dados.NOME;
+    let pessoa = new Pessoa();
+    pessoa.id = uuid();
+    pessoa.nome = dados.nome;
+    pessoa.endereco = dados.endereco;
+    pessoa.telefone = dados.telefone;
 
     return this.pessoaRepository.save(pessoa)
       .then((result) => {
         return <RetornoCadastroDTO>{
-          id: pessoa.ID,
+          id: pessoa.id,
           message: "Pessoa cadastrada!"
         };
       })
@@ -39,10 +43,10 @@ export class PessoaService {
 
   }
 
-  localizarID(ID: string): Promise<PESSOA> {
+  localizarID(id: string): Promise<Pessoa> {
     return this.pessoaRepository.findOne({
       where: {
-        ID,
+        id,
       },
     });
   }
@@ -50,49 +54,49 @@ export class PessoaService {
   listaNomes(): Promise<any[]> {
     return this.pessoaRepository.find({
       select: {
-        NOME: true,
+        nome: true,
       }
     });
   }
 
-  async listaComUsua(NOME_PESSOA?: string): Promise<listaPessoaUsuaDTO[]> {
+  //   async listaComForn(NOME_MARCA?: string): Promise<listaMarcaFornDTO[]> {
 
-    if (NOME_PESSOA != undefined) {
-      var retorno = await (this.pessoaRepository // select marca.id as ID, marca.nome AS NOME_, pes_f.nome from marca ......
-        .createQueryBuilder('marca')
-        .select('marca.id', 'ID')
-        .addSelect('marca.nome', 'nome_marca')
-        .addSelect('pes_f.nome', 'nome_fornecedor')
-        .leftJoin('for_marca', 'fm', 'fm.idmarca = marca.id')
-        .leftJoin('fornecedor', 'for', 'for.id = fm.idfornecedor')
-        .leftJoin('pessoa', 'pes_f', 'for.idpessoa = pes_f.id')
-        .where('marca.nome like :nomemarca', { nomepessoa: `%${NOME_PESSOA}%` })
-        .getRawMany());
-    }
-    else {
-      var retorno = await (this.pessoaRepository // select marca.id as ID, marca.nome AS NOME_, pes_f.nome from marca ......
-        .createQueryBuilder('marca')
-        .select('marca.id', 'ID')
-        .addSelect('marca.nome', 'nome_marca')
-        .addSelect('pes_f.nome', 'nome_fornecedor')
-        .leftJoin('for_marca', 'fm', 'fm.idmarca = marca.id')
-        .leftJoin('fornecedor', 'for', 'for.id = fm.idfornecedor')
-        .leftJoin('pessoa', 'pes_f', 'for.idpessoa = pes_f.id')
-        .getRawMany());
-    }
+  //     if (NOME_MARCA != undefined){
+  //       var retorno = await (this.pessoaRepository // select marca.id as ID, marca.nome AS NOME_, pes_f.nome from marca ......
+  //       .createQueryBuilder('marca')
+  //       .select('marca.id','ID')
+  //       .addSelect('marca.nome','nome_marca')
+  //       .addSelect('pes_f.nome','nome_fornecedor')
+  //       .leftJoin('for_marca', 'fm','fm.idmarca = marca.id')  
+  //       .leftJoin('fornecedor', 'for','for.id = fm.idfornecedor')    
+  //       .leftJoin('pessoa', 'pes_f','for.idpessoa = pes_f.id')  
+  //       .where('marca.nome like :nomemarca',{ nomemarca: `%${NOME_MARCA}%` })         
+  //       .getRawMany());  
+  //     }
+  //     else{      
+  //       var retorno = await (this.pessoaRepository // select marca.id as ID, marca.nome AS NOME_, pes_f.nome from marca ......
+  //       .createQueryBuilder('marca')
+  //       .select('marca.id','ID')
+  //       .addSelect('marca.nome','nome_marca')
+  //       .addSelect('pes_f.nome','nome_fornecedor')
+  //       .leftJoin('for_marca', 'fm','fm.idmarca = marca.id')  
+  //       .leftJoin('fornecedor', 'for','for.id = fm.idfornecedor')    
+  //       .leftJoin('pessoa', 'pes_f','for.idpessoa = pes_f.id')  
+  //       .getRawMany());      
+  //     }
 
 
 
-    const listaRetorno = retorno.map(
-      pessoa => new listaPessoaUsuaDTO(
-        pessoa.ID,
-        pessoa.nome_pessoa,
-        pessoa.nome_usuario
-      )
-    );
+  //     const listaRetorno = retorno.map(
+  //       marca => new listaMarcaFornDTO(
+  //         marca.ID,
+  //         marca.nome_marca,
+  //         marca.nome_fornecedor
+  //       )
+  //     );
 
-    return listaRetorno;
-  }
+  //     return listaRetorno;    
+  //   }
 
   async remover(id: string): Promise<RetornoObjDTO> {
     const pessoa = await this.localizarID(id);
@@ -128,7 +132,7 @@ export class PessoaService {
     return this.pessoaRepository.save(pessoa)
       .then((result) => {
         return <RetornoCadastroDTO>{
-          id: pessoa.ID,
+          id: pessoa.id,
           message: "Pessoa alterada!"
         };
       })

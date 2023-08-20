@@ -12,11 +12,11 @@ export const databaseProviders = [
         password: '',
         database: 'projetoapi',
         entities: [
-            __dirname + '/../**/*.entity{.ts,.js}',
+          __dirname + '/../**/*.entity{.ts,.js}',
         ],
         synchronize: false,
       });
-      
+
       return dataSource.initialize();
     },
   },

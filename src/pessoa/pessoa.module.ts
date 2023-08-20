@@ -1,9 +1,9 @@
+
 import { Module } from '@nestjs/common';
 import { DatabaseModule } from '../database/database.module';
 import { PessoaController } from './pessoa.controller';
 import { pessoaProviders } from './pessoa.providers';
 import { PessoaService } from './pessoa.service';
-
 
 @Module({
   imports: [DatabaseModule],
@@ -13,4 +13,4 @@ import { PessoaService } from './pessoa.service';
     PessoaService,
   ],
 })
-export class PessoaModule { }
+export class PessoaModule { } 

@@ -1,8 +1,8 @@
 import { PRODUTO } from 'src/produto/produto.entity';
-import {Entity,Column, PrimaryColumn, OneToMany} from 'typeorm';
+import { Entity, Column, PrimaryColumn, OneToMany } from 'typeorm';
 
 @Entity()
-export class MARCA{
+export class MARCA {
     @PrimaryColumn()
     ID: string;
 
