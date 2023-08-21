@@ -1,15 +1,16 @@
-import { PRODUTO } from 'src/produto/produto.entity';
-import {Entity,Column, PrimaryColumn, OneToMany} from 'typeorm';
+import { Column, Entity, PrimaryColumn } from "typeorm";
 
 @Entity()
-export class PESSOA {
+export class Pessoa{
     @PrimaryColumn()
-    ID: string;
+    id: string;
 
     @Column()
-    NOME: string;
+    nome: string;
 
-    @OneToMany(() => PRODUTO, produto => produto.marca)
-    produtos: PRODUTO[];
+    @Column()
+    endereco: string;
 
+    @Column()
+    telefone: string;
 }

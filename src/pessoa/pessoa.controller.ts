@@ -1,10 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Post, Put } from "@nestjs/common";
-import { PESSOA } from "./pessoa.entity";
-import { PessoaService } from "./pessoa.service";
-import { CriaPessoaDTO } from "./dto/criaPessoa.dto";
 import { RetornoCadastroDTO, RetornoObjDTO } from "src/dto/retorno.dto";
-import { listaPessoaFornDTO } from "./dto/listaPessoaForn.dto";
-import { PesquisaPessoaDTO } from "./dto/pesquisaPessoa.dto";
+import { CriaPessoaDTO } from "./dto/criaPessoa.dto";
+import { Pessoa } from "./pessoa.entity";
+import { PessoaService } from "./pessoa.service";
 
 
 @Controller('/pessoa')
@@ -14,22 +12,22 @@ export class PessoaController{
     }
 
     @Get('listar')
-    async listar(): Promise<PESSOA[]>{
+    async listar(): Promise<Pessoa[]>{
         return this.pessoaService.listar();
     }
 
     @Post('')
-    async criaPessoa(@Body() dados: CriaPessoaDTO): Promise<RetornoCadastroDTO>{        
+    async criaMarca(@Body() dados: CriaPessoaDTO): Promise<RetornoCadastroDTO>{        
         return this.pessoaService.inserir(dados)        
     }
 
-    @Put('alterar-:id')
-    async alterarPessoa(@Body() dados: CriaPessoaDTO,@Param('id') id: string): Promise<RetornoCadastroDTO>{        
+    @Put(':id')
+    async alterarMarca(@Body() dados: CriaPessoaDTO,@Param('id') id: string): Promise<RetornoCadastroDTO>{        
         return this.pessoaService.alterar(id,dados)        
     }
     
     @Get('ID-:id')
-    async listarID(@Param('id') id: string): Promise<PESSOA>{
+    async listarID(@Param('id') id: string): Promise<Pessoa>{
         return this.pessoaService.localizarID(id);
     }
 
@@ -43,10 +41,10 @@ export class PessoaController{
         return this.pessoaService.remover(id);
     }
 
-    @Get('ComUsuario/')
-    async listaMarcaForn(@Body() dados: PesquisaPessoaDTO): Promise<listaPessoaFornDTO[]>{
-        return await this.pessoaService.listaComForn(dados.NOME);
-    }
+    // @Get('ComForn/')
+    // async listaMarcaForn(@Body() dados: PesquisaMarcaDTO): Promise<listaMarcaFornDTO[]>{
+    //     return await this.pessoaService.listaComForn(dados.NOME);
+    // }
     
 
 }
